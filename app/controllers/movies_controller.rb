@@ -19,10 +19,9 @@ class MoviesController < ApplicationController
     end
 
     def create
-        params.require(:movie)
+        
         new_movie  = params[:movie].permit(:title,:rating,:release_date,:description)
         @movie = Movie.new(new_movie)
-
         if @movie.save
             flash[:notice] = "#{@movie.title} was successfully created."
             redirect_to movies_path
@@ -55,10 +54,11 @@ class MoviesController < ApplicationController
     def movies_with_good_reviews
         @movies = Movie.joins(:reviews).group(:movie_id).
           having('AVG(reviews.potatoes) > 3')
-      end
-      def movies_for_kids
+    end
+
+    def movies_for_kids
         @movies = Movie.where('rating in ?', %w(G PG))
-      end
+    end
 
       def movies_with_filters_2
         @movies = Movie.with_good_reviews(params[:threshold])
@@ -68,7 +68,26 @@ class MoviesController < ApplicationController
       end
 
 
-      def search_tmdb 
-        @movies = Movie.find_in_tmdb(params[:search_terms])
+      def search_tmdb
+        begin
+            @search_terms = params[:search_terms]
+            @tmp = Movie.find_in_tmdb(@search_terms)
+            @movies = [@tmp[0]]
+            if @movies.length() == 1
+                @movie = @movies[0]
+                @rating = Movie.find_rating(@movie.id)
+                render 'detail_tmdb'
+            elsif !@movies.empty?
+                render 'tmdb_result'
+            else
+                flash[:warning] = "'Movie That Does Not Exist' was not found in TMDb."
+                redirect_to movies_path
+            end
+        rescue NoMethodError
+            flash[:notice] = "'Movie That Does Not Exist' was not found in TMDb."
+            redirect_to movies_path
+        end     
       end
+
+     
 end

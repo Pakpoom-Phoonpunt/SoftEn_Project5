@@ -1,6 +1,7 @@
 class Movie < ActiveRecord::Base
   has_many :reviews
   has_many :moviegoers, :through => :reviews
+
   scope :with_good_reviews, lambda { |threshold|
     Movie.joins(:reviews).group(:movie_id).
       having(['AVG(reviews.potatoes) > ?', threshold.to_i])
@@ -30,12 +31,24 @@ class Movie < ActiveRecord::Base
       release_date && release_date < @@grandfathered_date
     end
 
+    class Movie::InvalidKeyError < StandardError ; end
+
     def self.find_in_tmdb(string)
 			begin
 				Tmdb::Movie.find(string)
-			rescue Tmdb::InvalidKeyError
+			rescue Tmdb::InvalidApiKeyError
 				raise Movie::InvalidKeyError, 'Invalid API key'		
 			end
     end
-    
+    def self.find_rating(id)
+      detail = Tmdb::Movie.releases(id)
+      @rating = ""
+      detail["countries"].each{|tmp| 
+      if tmp["iso_3166_1"]==="US" 
+        @rating = tmp["certification"]
+      end};
+      return @rating
+    end 
+      
+      #detail["countries"].each {|selected_list| if selected_list["iso_3166_1"] === "US"}
 end

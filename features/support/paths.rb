@@ -18,11 +18,13 @@ module NavigationHelpers
 
     when /^the RottenPotatoes home page/
       '/movies'
-    when /^Add New movie/
-      '/movies/new' 
     when /^the Create New Movie page/
       '/movies/new'
-
+    when /^the "Search Results" page/
+      '/movies/search_tmdb'
+      
+   # when /^/
+    #  '/movies/'
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
@@ -43,3 +45,4 @@ module NavigationHelpers
 end
 
 World(NavigationHelpers)
+ 

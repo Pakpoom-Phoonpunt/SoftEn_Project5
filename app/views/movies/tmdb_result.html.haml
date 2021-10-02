@@ -1,0 +1,16 @@
+%h1#header result for #{@search_terms}
+
+%table#movies
+    %thead
+        %tr
+            %th Number
+            %th Movie Title
+            %th Release Date
+            %th More Info
+    %tbody
+        -@movies.each_with_index do |movie,index|
+            %tr#hover
+                %td{:style=>"text-align:center"}= index+1  
+                %td= movie.title
+                %td= movie.release_date
+                %td= link_to "Add #{movie.title}", movie_path(movie)

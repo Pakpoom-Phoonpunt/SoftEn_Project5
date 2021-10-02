@@ -1,0 +1,18 @@
+%h1#header  #{@movie.title} (#{@movie.release_date})  #{link_to 'Edit', edit_movie_path(@movie), style: "font-size:14px"}
+
+%ul 
+  %li#details
+    Rating:
+    = @rating
+  %li#details
+    Released on:
+    = @movie.release_date
+
+%h3#description Description:
+
+=#%p#description= @movie.description
+%div 
+%br
+
+= link_to 'Back to movie list', movies_path()
+= link_to 'Add', movies_path()

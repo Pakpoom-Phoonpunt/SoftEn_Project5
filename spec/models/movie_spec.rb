@@ -10,10 +10,10 @@ describe Movie do
 		end
 		context 'with invalid API key' do
 			before(:each) do
-				allow(Tmdb::Movie).to receive(:find).and_raise(Tmdb::InvalidKeyError)
+				allow(Tmdb::Movie).to receive(:find).and_raise(Tmdb::InvalidApiKeyError)
 			end
 			it 'raises an InvalidKeyError' do
-				expect {Movie.find_in_tmdb('Inception')}.to raise_error(Tmdb::InvalidKeyError)	
+				expect {Movie.find_in_tmdb('Inception')}.to raise_error(Movie::InvalidKeyError)	
 			end
 		end	
 	end
