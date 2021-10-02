@@ -9,7 +9,7 @@ class Movie < ActiveRecord::Base
   scope :for_kids, lambda {
     Movie.where('rating in (?)', %w(G PG))
   }
-  def self.all_ratings ; %w[ - G PG PG-13 R NC-17] ; end #  shortcut: array of strings
+  def self.all_ratings ; %w[ - G PG PG-13 R NC-17 NR ] ; end #  shortcut: array of strings
   before_save :capitalize_title
   def capitalize_title
     self.title = self.title.split(/\s+/).map(&:downcase).
@@ -18,8 +18,8 @@ class Movie < ActiveRecord::Base
     validates :title, :presence => true
     validates :release_date, :presence => true
     validate :released_1930_or_later 
-    validates :rating, :inclusion => {:in => Movie.all_ratings},
-      :unless => :grandfathered?
+    # validates :rating, :inclusion => {:in => Movie.all_ratings},
+    #   :unless => :grandfathered?
       
     def released_1930_or_later
       errors.add(:release_date, 'must be 1930 or later') if
@@ -39,6 +39,9 @@ class Movie < ActiveRecord::Base
 			rescue Tmdb::InvalidApiKeyError
 				raise Movie::InvalidKeyError, 'Invalid API key'		
 			end
+    end
+    def self.find_by_id_tmdb(id)
+      Tmdb::Movie.detail(id)
     end
     def self.find_rating(id)
       detail = Tmdb::Movie.releases(id)

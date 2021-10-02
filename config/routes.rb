@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   get  'auth/failure' => 'sessions#failure'
   get  'auth/google_oauth2', :as => 'login'
   post '/movies/search_tmdb'
+
+  get '/add' => 'movies#add', as: 'add'
+  get '/show_tmdb' => 'movies#show_tmdb'
 end

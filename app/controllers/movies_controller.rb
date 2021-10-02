@@ -68,14 +68,16 @@ class MoviesController < ApplicationController
       end
 
 
-      def search_tmdb
+    def search_tmdb
         begin
             @search_terms = params[:search_terms]
-            @tmp = Movie.find_in_tmdb(@search_terms)
-            @movies = [@tmp[0]]
+            @movies = Movie.find_in_tmdb(@search_terms)
+            # @tmdbmovies = Movie.find_in_tmdb(@search_terms)
+            # @movies = [@tmdbmovies[0]]
             if @movies.length() == 1
-                @movie = @movies[0]
-                @rating = Movie.find_rating(@movie.id)
+                @tmdbmovie = @movies[0]
+                @rating = Movie.find_rating(@tmdbmovie.id)
+                @movie = Movie.new( :title => @tmdbmovie.title, :release_date => @tmdbmovie.release_date, :rating => @rating, :description => @tmdbmovie.overview)
                 render 'detail_tmdb'
             elsif !@movies.empty?
                 render 'tmdb_result'
@@ -87,7 +89,16 @@ class MoviesController < ApplicationController
             flash[:notice] = "'Movie That Does Not Exist' was not found in TMDb."
             redirect_to movies_path
         end     
-      end
+    end
 
-     
+    def add
+        @movie = Movie.create!(:title => params[:title], :release_date => params[:releases_date], :rating => @rating, :description => params[:des])
+        redirect_to movies_path
+    end
+    def show_tmdb
+        @movie = Movie.find_by_id_tmdb(params[:id])
+        @rating = Movie.find_rating(params[:id])
+        @movie = Movie.new( :title => @movie["title"], :release_date => @movie["release_date"], :rating => @rating, :description => @movie["overview"])
+        render 'detail_tmdb'
+    end
 end
