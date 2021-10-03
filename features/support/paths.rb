@@ -22,6 +22,10 @@ module NavigationHelpers
       '/movies/new'
     when /^the "Search Results" page/
       '/movies/search_tmdb'
+    
+
+    when /^the Edit Existing Movie page/
+      "/movies/#{Movie.last.id}/edit"
       
    # when /^/
     #  '/movies/'
