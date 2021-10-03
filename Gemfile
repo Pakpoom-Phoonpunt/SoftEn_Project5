@@ -65,3 +65,6 @@ group :development, :test do
  gem 'guard-rspec'
  gem 'factory_bot'
 end
+
+#Rspec Need TDD ADd
+gem 'rails-controller-testing'

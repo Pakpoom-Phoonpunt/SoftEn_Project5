@@ -4,7 +4,9 @@
     =render :partial => 'editR_form'
     %br
     = submit_tag 'Save Changes'
-%br
 %div
+%br
 = link_to 'Cancel', movie_path(@movie)
+%div
+%br
 = link_to 'Delete', movie_review_path(@movie,@review), :method => :delete

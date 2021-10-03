@@ -70,6 +70,8 @@ class MoviesController < ApplicationController
 
     def search_tmdb
         begin
+           # @movies = Movie.find_in_tmdb(params[:search_terms])
+            
             @search_terms = params[:search_terms]
             @movies = Movie.find_in_tmdb(@search_terms)
             # @tmdbmovies = Movie.find_in_tmdb(@search_terms)
