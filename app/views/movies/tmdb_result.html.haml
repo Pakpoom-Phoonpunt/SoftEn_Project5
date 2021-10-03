@@ -13,8 +13,8 @@
         -@movies.each_with_index do |movie,index|
             %tr#hover
                 %td{:style=>"text-align:center"}= index+1  
-                %td= movie.title
-                %td= movie.release_date
+                %td{:style=>"text-align:center"}= movie.title
+                %td{:style=>"text-align:center"}= @release_li[index]
                 %td{:style=>"text-align:center"}= @ratings[index]
-                %td= link_to 'More', "/show_tmdb?id=#{movie.id}", method: 'get'
+                %td{:style=>"text-align:center"}= link_to 'More', "/show_tmdb?id=#{movie.id}", method: 'get'
 = link_to 'Back to movie list', movies_path() , :class => "home_btn"

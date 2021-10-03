@@ -13,8 +13,8 @@
             %tr#hover
                 %td{:style=>"text-align:center"}= index+1  
                 %td= movie.title 
-                %td= movie.rating 
-                %td= movie.release_date.strftime("%F")
+                %td{:style=>"text-align:center"}= movie.rating 
+                %td{:style=>"text-align:center"}= @release_li[index]
                 %td= link_to "More about #{movie.title}", movie_path(movie)
 %h3 #{link_to 'Add New movie' , new_movie_path(), style:"text-align: right"  }
 %h1.search-label Search TMDb for a movie

@@ -3,12 +3,23 @@ class MoviesController < ApplicationController
     def index
         # @movies = Movie.all()
         @movies = Movie.order("title ASC")
+        @release_li = []
+        @movies.each {|tmp|
+            if tmp.release_date.nil?
+                @release_li << "xxxx-xx-xx"
+            else
+                @release_li << tmp.release_date.strftime("%F")
+            end
+        } 
         # @movies = Movie.all().sort_by{|mov| mov.title}
     end
 
     def show
         begin
             @movie = Movie.find(params[:id])
+            @year = "xxxx"
+            @release_date = "xxxx-xx-xx"
+            if !@movie.release_date.nil? then @release_date = @movie.release_date.strftime("%F");@year=@movie.release_date.strftime("%Y") end
         rescue ActiveRecord::RecordNotFound
             flash[:notice] = " No movie with the given ID could be found."
             redirect_to action:"index"
@@ -80,13 +91,25 @@ class MoviesController < ApplicationController
             @movies = Movie.find_in_tmdb(@search_terms)
             if @movies.length() == 1
                 @tmdbmovie = @movies[0]
+                @id_tmdb = @tmdbmovie.id
                 @rating = Movie.find_rating(@tmdbmovie.id)
                 @movie = Movie.new( :title => @tmdbmovie.title, :release_date => @tmdbmovie.release_date, :rating => @rating, :description => @tmdbmovie.overview)
+                @release_date = "xxxx-xx-xx"
+                @year = "xxxx"
+                if !@movie.release_date.nil? then @release_date = @movie.release_date.strftime("%F");@year=@movie.release_date.strftime("%Y") end
                 render 'detail_tmdb'
             elsif !@movies.empty?
                 flash[:notice] = "Found #{@movies.length()} Movies Match."
                 @ratings = []
-                @movies.each {|tmp| @ratings << Movie.find_rating(tmp.id)}
+                @release_li = []
+                @movies.each {|tmp| 
+                    @ratings << Movie.find_rating(tmp.id)
+                    if tmp.release_date.nil?
+                        @release_li << "xxxx-xx-xx"
+                    else
+                        @release_li << tmp.release_date
+                    end
+                }
                 render 'tmdb_result'
             else
                 flash[:warning] = "'Movie That Does Not Exist' was not found in TMDb."
@@ -105,10 +128,11 @@ class MoviesController < ApplicationController
         redirect_to movies_path
     end
     def show_tmdb
-        
         @movie = Movie.find_by_id_tmdb(params[:id])
         @rating = Movie.find_rating(params[:id])
-        @id_tmdb = @movie["id"]
+        @id_tmdb = params[:id]
+        @release_date = "xxxx-xx-xx"
+        if !@movie["release_date"].nil? then @release_date = @movie["release_date"] end
         @movie = Movie.new( :title => @movie["title"], :release_date => @movie["release_date"], :rating => @rating, :description => @movie["overview"])
         render 'detail_tmdb'
     end

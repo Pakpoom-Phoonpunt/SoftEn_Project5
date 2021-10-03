@@ -1,4 +1,4 @@
-%h1#header  #{@movie.title} (#{@movie.release_date.strftime("%Y")}) 
+%h1#header  #{@movie.title} (#{@year}) 
 
 %ul 
   %li#details
@@ -6,7 +6,7 @@
     = @movie.rating
   %li#details
     Released on:
-    = @movie.release_date.strftime("%F")
+    = @release_date
 
 %h3#description Description:
 %p#description= @movie.description 

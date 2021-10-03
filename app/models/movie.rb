@@ -17,7 +17,7 @@ class Movie < ActiveRecord::Base
       map(&:capitalize).join(' ')
   end
     validates :title, :presence => true
-    validates :release_date, :presence => true
+    # validates :release_date, :presence => true
     validate :released_1930_or_later 
     # validates :rating, :inclusion => {:in => Movie.all_ratings},
     #   :unless => :grandfathered?
