@@ -53,8 +53,5 @@ class Movie < ActiveRecord::Base
       return @rating
     end 
     
-    def self.name_with_rating
-      return "#{self.title}"
-    end
       #detail["countries"].each {|selected_list| if selected_list["iso_3166_1"] === "US"}
 end

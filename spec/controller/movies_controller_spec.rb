@@ -57,9 +57,9 @@ require 'rails_helper'
       end
 
 
-      #Failure test
+      
       it 'selects the Search Results template for rendering' do
-        expect(response).to render_template('search_tmdb')
+        expect(response).to render_template('tmdb_result')
       end
     end
   end
