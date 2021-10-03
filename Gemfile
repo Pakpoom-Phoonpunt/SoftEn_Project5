@@ -37,6 +37,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   gem 'dotenv-rails'
+
 end
 
 group :development do
@@ -64,7 +65,9 @@ group :development, :test do
  gem 'rspec-rails' 
  gem 'guard-rspec'
  gem 'factory_bot'
+ gem 'factory_girl_rails'
 end
 
 #Rspec Need TDD ADd
 gem 'rails-controller-testing'
+
