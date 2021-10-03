@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :has_moviegoer_and_movie, :only => [:new, :create , :edit]
+  skip_after_action :clearFlash , :only =>[:edit]
     protected
     def has_moviegoer_and_movie
       @movie = Movie.find_by_id(params[:movie_id])
@@ -12,6 +13,7 @@ class ReviewsController < ApplicationController
         redirect_to movies_path
       end
     end
+    
     public
     def new
       @movie = Movie.find_by_id(params[:movie_id])

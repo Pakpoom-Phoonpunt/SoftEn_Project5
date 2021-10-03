@@ -1,13 +1,24 @@
+:root{
+  --bg: rgba(240, 240, 240, 0.685);
+  --text-color: rgb(17, 32, 49);
+  --text-normal-color: rgb(241, 2, 2);
+  --text-accent-color: maroon;
+}
 html, body {
     margin-top: 5px;
     margin-bottom: 0;
-    margin-right: 8%;
-    margin-left: 8%;
+    margin-right: 5%;
+    margin-left: 5%;
     padding: 0;
     background: White;
     color: DarkSlateGrey;
     font-family: Tahoma, Verdana, sans-serif;
     font-size: 10pt;
+  }
+  body{
+    padding: 2rem 2rem;
+    border-radius: 12px;
+    background: var(--bg);
   }
   div#main {
     margin: 10;
@@ -15,12 +26,18 @@ html, body {
   }
   a {
     background: transparent;
-    color: maroon;
+    color: var(--text-color);
     text-decoration: underline;
     font-weight: bold;
   }
+  .login{
+    font-size: 18px;
+  }
+  .login:hover{
+    text-decoration: none;
+  }
   h1 {
-    color: maroon;
+    color: var(--text-color);
     font-size: 175%;
     /*font-style: italic;*/
     display: block;
@@ -59,19 +76,21 @@ html, body {
     
   }
   #notice, #warning {
-    background: rosybrown;
+    background: maroon;
+    color: white;
     margin: 1em 0;
     padding: 4px;
+    font-size: 16px;
   }
   form label {
     display: block;
     line-height: 25px;
     font-weight: bold;
-    color: maroon;
+    color: var();
     
   }
   h2#banner a{
-    color: red;
+    color: maroon;
     text-decoration: none;
     font-size: xx-large;
     text-align: left;
@@ -84,4 +103,25 @@ html, body {
   }
   h3#description{
     text-align: left;
+  }
+  .home_btn{
+    color: var(--text-normal-color);
+    font-size: 18px;
+    text-decoration: none;
+    transition: ease 0.2s;
+  }
+  .home_btn:hover{
+    color: var(--text-accent-color);
+  }
+  #three-btn .home_btn .btn {
+    font-size: 20px;   
+    color: var(--text-normal-color);
+    transition: ease 0.2s;
+    margin: 1em;
+  }
+  .btn:hover{
+    color: var(--text-accent-color);
+  }
+  .search-label{
+    color: var(--text-accent-color);
   }

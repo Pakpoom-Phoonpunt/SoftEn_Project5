@@ -1,16 +1,20 @@
-%h1#header result for #{@search_terms}
-
+%h1#header Result for #{@search_terms}.
+    
 %table#movies
     %thead
         %tr
             %th Number
             %th Movie Title
             %th Release Date
+            %th Rating
             %th More Info
+            
     %tbody
         -@movies.each_with_index do |movie,index|
             %tr#hover
                 %td{:style=>"text-align:center"}= index+1  
                 %td= movie.title
                 %td= movie.release_date
+                %td{:style=>"text-align:center"}= @ratings[index]
                 %td= link_to 'More', "/show_tmdb?id=#{movie.id}", method: 'get'
+= link_to 'Back to movie list', movies_path() , :class => "home_btn"

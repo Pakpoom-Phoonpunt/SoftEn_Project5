@@ -13,8 +13,8 @@
 %div 
 %br
 
-= link_to 'REAL Add', "/add?title=#{@movie.title}&rating=#{@movie.rating}&releases_date=#{@movie.release_date}&des=#{@movie.description}", method: 'get'
+= link_to 'Add', "/add?id=#{@id_tmdb}", method: 'get', :class => "btn"
 
 %div 
 %br
-= link_to 'Back to movie list', movies_path()
+= link_to 'Back to movie list', movies_path(), :class => "home_btn"

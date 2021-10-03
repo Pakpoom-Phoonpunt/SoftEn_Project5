@@ -23,19 +23,18 @@
       %th Potato
       %th Comment
   %tbody
-    -@movie.reviews.each do |item|
+    -@movie.reviews.each do |review|
       %tr 
-        %td= item.moviegoer.name
-        %td= item.potatoes
-        %td= item.comments
-        %td= link_to 'Edit Review', edit_movie_review_path(@movie,item)
+        %td= review.moviegoer.name
+        %td= review.potatoes
+        %td= review.comments
+        %td= link_to 'Edit Review', edit_movie_review_path(@movie,review)  
+        -# line 31 link ไปหน้า edit ของ review นั้นๆ
 
-%div 
-%br
-= link_to 'Back to movie list', movies_path()
-%div 
-%br
-= link_to 'Delete', movie_path(@movie), :method => :delete
-%div 
-%br
-= link_to 'Add Review', new_movie_review_path(@movie)
+%div#three-btn
+  %br
+  = link_to 'Delete', movie_path(@movie), :method => :delete, :class => "btn"
+  %br
+  = link_to 'Add Review', new_movie_review_path(@movie), :class => "btn"
+  %br
+  = link_to 'Back to movie list', movies_path(), :class => "home_btn"

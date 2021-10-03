@@ -1,3 +1,4 @@
+
 class Movie < ActiveRecord::Base
   has_many :reviews
   has_many :moviegoers, :through => :reviews
@@ -45,13 +46,17 @@ class Movie < ActiveRecord::Base
     end
     def self.find_rating(id)
       detail = Tmdb::Movie.releases(id)
-      @rating = ""
-      detail["countries"].each{|tmp| 
-      if tmp["iso_3166_1"]==="US" 
+      @rating = "-"
+      tmp =  detail["countries"].select {|tmp| tmp["iso_3166_1"] === "US" }
+      begin
+        tmp = tmp[0]
         @rating = tmp["certification"]
-      end};
-      return @rating
+        if @rating == ""
+          @rating = "-"
+        end
+        return @rating
+      rescue
+        return @rating
+      end
     end 
-    
-      #detail["countries"].each {|selected_list| if selected_list["iso_3166_1"] === "US"}
 end
